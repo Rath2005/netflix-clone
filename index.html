@@ -16,6 +16,8 @@
       <li>Movies</li>
       <li>My List</li>
     </ul>
+
+    <button onclick="logout()">Logout</button>
   </nav>
 
   <section class="banner">
@@ -56,7 +58,15 @@
 
   </div>
 
-  <script src="script.js"></script>
+  <script>
+
+if(localStorage.getItem("user") == null){
+    window.location.href = "login.html";
+}
+
+</script>
+
+<script src="script.js"></script>
 <footer>
   <p>Netflix Clone © 2026 | Built by Subhankar</p>
 </footer>
