@@ -45,6 +45,16 @@
     <input type="password" id="password" placeholder="Enter Password">
 
     <button onclick="login()">Login</button>
+
+    <p style="color:white; margin-top:15px;">
+
+New User?
+
+<a href="register.html" style="color:red;">
+Register
+</a>
+
+</p>
 </div>
 
 <script>
@@ -52,12 +62,14 @@
 function login(){
 
     let email = document.getElementById("email").value;
+
     let password = document.getElementById("password").value;
 
-    if(email === "" || password === ""){
-        alert("Please fill all fields");
-    }
-    else{
+    let storedEmail = localStorage.getItem("email");
+
+    let storedPassword = localStorage.getItem("password");
+
+    if(email == storedEmail && password == storedPassword){
 
         localStorage.setItem("user", email);
 
@@ -65,6 +77,12 @@ function login(){
 
         window.location.href = "index.html";
     }
+
+    else{
+
+        alert("Invalid Email or Password");
+    }
+
 }
 
 </script>
