@@ -9,7 +9,8 @@ const connectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, ".env") });
+
 
 // Connect to MongoDB
 connectDB();
@@ -124,16 +125,23 @@ app.use(errorHandler);
 
 // ─── Start Server ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-  console.log(`\n🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-  console.log(`📡 API: http://localhost:${PORT}/api`);
-  console.log(`❤️  Health: http://localhost:${PORT}/api/health\n`);
-});
+let server;
+if (require.main === module) {
+  server = app.listen(PORT, () => {
+    console.log(`\n🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    console.log(`📡 API: http://localhost:${PORT}/api`);
+    console.log(`❤️  Health: http://localhost:${PORT}/api/health\n`);
+  });
+}
 
 // ─── Unhandled Promise Rejections ─────────────────────────────────────────────
 process.on("unhandledRejection", (err) => {
   console.error(`❌ Unhandled Rejection: ${err.message}`);
-  server.close(() => process.exit(1));
+  if (server) {
+    server.close(() => process.exit(1));
+  } else {
+    process.exit(1);
+  }
 });
 
 // ─── Uncaught Exceptions ──────────────────────────────────────────────────────
@@ -141,3 +149,5 @@ process.on("uncaughtException", (err) => {
   console.error(`❌ Uncaught Exception: ${err.message}`);
   process.exit(1);
 });
+
+module.exports = app;
