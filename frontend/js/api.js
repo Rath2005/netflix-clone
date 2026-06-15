@@ -8,10 +8,12 @@
 // Determine the backend API URL dynamically.
 // If the frontend is loaded from a standard development or Live Server port,
 // automatically route API requests to port 5000 on the same host.
-let BASE_URL = window.location.origin + "/api";
+let BASE_URL = "https://netflix-clone-production-eaf2.up.railway.app/api";
+
 const devPorts = ["5500", "5501", "5502", "5503", "3000", "3001"];
+
 if (devPorts.includes(window.location.port)) {
-  BASE_URL = `${window.location.protocol}//${window.location.hostname}:5000/api`;
+  BASE_URL = "http://localhost:5000/api";
 }
 
 // ─── Axios Instance ───────────────────────────────────────────────
