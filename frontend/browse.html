@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse movies and TV shows on Netflix Clone — Search, filter by genre, and discover new content." />
+  <title>Browse — Netflix Clone</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══════════════════════════════════════════════════ -->
+  <nav class="navbar scrolled" id="main-navbar">
+    <div class="navbar-left">
+      <a href="index.html" class="nav-logo">NETFLIX</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="browse.html?type=tvshows">TV Shows</a></li>
+        <li><a href="browse.html" class="active">Movies</a></li>
+        <li><a href="watchlist.html">My List</a></li>
+      </ul>
+    </div>
+    <div class="navbar-right">
+      <div class="nav-user">
+        <img src="" alt="User" class="nav-avatar" id="nav-avatar" />
+        <div class="nav-dropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="nav-user-name">Loading...</div>
+            <div class="dropdown-role" id="nav-user-role">user</div>
+          </div>
+          <a href="profile.html" class="dropdown-item">👤 Profile</a>
+          <a href="watchlist.html" class="dropdown-item">📋 My List</a>
+          <a href="admin.html" class="dropdown-item" id="admin-link" style="display:none;">🔐 Admin</a>
+          <div style="border-top:1px solid var(--border-color);margin:4px 0;"></div>
+          <div class="dropdown-item danger logout-btn">🚪 Sign Out</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ BROWSE HEADER ════════════════════════════════════════════ -->
+  <div class="browse-header">
+    <h1 class="browse-title">Browse Content</h1>
+
+    <!-- Type Tabs -->
+    <div style="display:flex;gap:12px;margin-bottom:20px;">
+      <button class="filter-tab type-tab active" data-type="movies">🎬 Movies</button>
+      <button class="filter-tab type-tab" data-type="tvshows">📺 TV Shows</button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar" style="max-width:500px;margin-bottom:24px;">
+      <span style="font-size:16px;color:var(--text-muted);">🔍</span>
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search movies, shows, cast..."
+        autocomplete="off"
+      />
+      <span id="result-count" style="font-size:12px;color:var(--text-muted);white-space:nowrap;"></span>
+    </div>
+
+    <!-- Genre Filter Tabs -->
+    <div class="filter-tabs" id="genre-filters">
+      <button class="filter-tab active" data-genre="">All</button>
+      <button class="filter-tab" data-genre="Action">Action</button>
+      <button class="filter-tab" data-genre="Comedy">Comedy</button>
+      <button class="filter-tab" data-genre="Drama">Drama</button>
+      <button class="filter-tab" data-genre="Horror">Horror</button>
+      <button class="filter-tab" data-genre="Thriller">Thriller</button>
+      <button class="filter-tab" data-genre="Sci-Fi">Sci-Fi</button>
+      <button class="filter-tab" data-genre="Romance">Romance</button>
+      <button class="filter-tab" data-genre="Animation">Animation</button>
+      <button class="filter-tab" data-genre="Crime">Crime</button>
+      <button class="filter-tab" data-genre="Adventure">Adventure</button>
+      <button class="filter-tab" data-genre="Family">Family</button>
+    </div>
+  </div>
+
+  <!-- ═══ CONTENT GRID ═════════════════════════════════════════════ -->
+  <div class="content-grid" id="content-grid">
+    <div class="spinner" style="grid-column:1/-1;"></div>
+  </div>
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <p class="footer-text">Netflix Clone © 2026 | Built by Subhankar</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/browse.js"></script>
+  <script>
+    // Apply query param defaults
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("type") === "tvshows") {
+      document.querySelector('[data-type="tvshows"]')?.click();
+    }
+    if (params.get("genre")) {
+      const tab = document.querySelector(`[data-genre="${params.get("genre")}"]`);
+      if (tab) tab.click();
+    }
+  </script>
+</body>
+</html>

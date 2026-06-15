@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign in to Netflix Clone — Watch unlimited movies, TV shows and more." />
+  <title>Sign In — Netflix Clone</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="auth-page">
+
+  <!-- Navbar -->
+  <nav class="auth-nav">
+    <a href="login.html" class="auth-logo">NETFLIX</a>
+  </nav>
+
+  <!-- Login Card -->
+  <main class="auth-container">
+    <div class="auth-card">
+      <h1 class="auth-title">Sign In</h1>
+
+      <!-- Error Message -->
+      <div class="auth-error" id="auth-error" role="alert"></div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            class="form-input"
+            placeholder="Email address"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="form-group" style="position:relative;">
+          <input
+            type="password"
+            id="password"
+            class="form-input"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+          />
+          <span class="input-icon" id="toggle-password" onclick="togglePassword('password', this)" title="Show/hide password">👁</span>
+        </div>
+
+        <button type="submit" class="auth-btn" id="login-btn">
+          Sign In
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        New to Netflix Clone?
+        <a href="register.html">Sign up now</a>
+      </p>
+
+      <!-- Demo hint -->
+      <div style="margin-top:20px;padding:14px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">
+          <strong style="color:var(--text-secondary);">🔐 Demo Admin:</strong><br>
+          Email: <code style="color:var(--netflix-red);">admin@netflix.com</code><br>
+          Password: <code style="color:var(--netflix-red);">admin123</code>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="auth-footer">
+    <p>Netflix Clone © 2026 | Built by Subhankar | For educational purposes only</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    function togglePassword(inputId, icon) {
+      const input = document.getElementById(inputId);
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈";
+      } else {
+        input.type = "password";
+        icon.textContent = "👁";
+      }
+    }
+  </script>
+</body>
+</html>

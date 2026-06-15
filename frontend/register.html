@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create your Netflix Clone account — Watch unlimited movies, TV shows and more." />
+  <title>Register — Netflix Clone</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="auth-page">
+
+  <!-- Navbar -->
+  <nav class="auth-nav">
+    <a href="login.html" class="auth-logo">NETFLIX</a>
+  </nav>
+
+  <!-- Register Card -->
+  <main class="auth-container">
+    <div class="auth-card">
+      <h1 class="auth-title">Create Account</h1>
+
+      <!-- Error Message -->
+      <div class="auth-error" id="auth-error" role="alert"></div>
+
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <input
+            type="text"
+            id="name"
+            class="form-input"
+            placeholder="Full name"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            class="form-input"
+            placeholder="Email address"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="form-group" style="position:relative;">
+          <input
+            type="password"
+            id="password"
+            class="form-input"
+            placeholder="Password (min. 6 characters)"
+            autocomplete="new-password"
+            required
+          />
+          <span class="input-icon" onclick="togglePassword('password', this)" title="Show/hide">👁</span>
+          <div class="password-strength" style="margin-top:8px;">
+            <div class="password-strength-bar" id="strength-bar"></div>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-btn" id="register-btn">
+          Create Account
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a href="login.html">Sign in</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="auth-footer">
+    <p>Netflix Clone © 2026 | Built by Subhankar | For educational purposes only</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    function togglePassword(inputId, icon) {
+      const input = document.getElementById(inputId);
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈";
+      } else {
+        input.type = "password";
+        icon.textContent = "👁";
+      }
+    }
+  </script>
+</body>
+</html>

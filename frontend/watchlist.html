@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your Netflix Clone watchlist — Movies and TV shows you've saved." />
+  <title>My List — Netflix Clone</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══════════════════════════════════════════════════ -->
+  <nav class="navbar scrolled" id="main-navbar">
+    <div class="navbar-left">
+      <a href="index.html" class="nav-logo">NETFLIX</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="browse.html">Browse</a></li>
+        <li><a href="watchlist.html" class="active">My List</a></li>
+      </ul>
+    </div>
+    <div class="navbar-right">
+      <div class="nav-user">
+        <img src="" alt="User" class="nav-avatar" id="nav-avatar" />
+        <div class="nav-dropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="nav-user-name">Loading...</div>
+            <div class="dropdown-role" id="nav-user-role">user</div>
+          </div>
+          <a href="profile.html" class="dropdown-item">👤 Profile</a>
+          <a href="watchlist.html" class="dropdown-item">📋 My List</a>
+          <a href="admin.html" class="dropdown-item" id="admin-link" style="display:none;">🔐 Admin</a>
+          <div style="border-top:1px solid var(--border-color);margin:4px 0;"></div>
+          <div class="dropdown-item danger logout-btn">🚪 Sign Out</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ PAGE CONTENT ══════════════════════════════════════════════ -->
+  <main class="page-wrapper">
+
+    <h1 class="page-title">
+      📋 My List
+      <span style="font-size:16px;font-weight:400;color:var(--text-secondary);">
+        (<span id="watchlist-count">0</span> titles)
+      </span>
+    </h1>
+
+    <!-- Movies in Watchlist -->
+    <section style="margin-bottom:48px;">
+      <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+        🎬 Movies
+      </h2>
+      <div class="content-grid" id="watchlist-movies">
+        <div class="spinner" style="grid-column:1/-1;"></div>
+      </div>
+    </section>
+
+    <!-- TV Shows in Watchlist -->
+    <section>
+      <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+        📺 TV Shows
+      </h2>
+      <div class="content-grid" id="watchlist-shows">
+        <div class="spinner" style="grid-column:1/-1;"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <p class="footer-text">Netflix Clone © 2026 | Built by Subhankar</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/watchlist.js"></script>
+</body>
+</html>

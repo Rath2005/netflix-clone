@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Netflix Clone Admin Dashboard — Manage movies, TV shows, and users." />
+  <title>Admin Dashboard — Netflix Clone</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <style>
+    .admin-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .admin-tab {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .admin-tab.active {
+      background: var(--netflix-red);
+      color: #fff;
+    }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-check { display:flex;align-items:center;gap:8px;margin-bottom:16px; }
+    .form-check input { width:18px;height:18px;accent-color:var(--netflix-red); }
+    .form-check label { font-size:14px;color:var(--text-secondary);cursor:pointer; }
+    @media(max-width:600px) { .form-row { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══════════════════════════════════════════════════ -->
+  <nav class="navbar scrolled">
+    <div class="navbar-left">
+      <a href="index.html" class="nav-logo">NETFLIX</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="browse.html">Browse</a></li>
+        <li><a href="admin.html" class="active">Admin</a></li>
+      </ul>
+    </div>
+    <div class="navbar-right">
+      <div class="nav-user">
+        <img src="" alt="User" class="nav-avatar" id="nav-avatar" />
+        <div class="nav-dropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="nav-user-name">Admin</div>
+            <div class="dropdown-role" id="nav-user-role">admin</div>
+          </div>
+          <a href="profile.html" class="dropdown-item">👤 Profile</a>
+          <div style="border-top:1px solid var(--border-color);margin:4px 0;"></div>
+          <div class="dropdown-item danger logout-btn">🚪 Sign Out</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ PAGE CONTENT ══════════════════════════════════════════════ -->
+  <main class="page-wrapper">
+
+    <h1 class="page-title">🔐 Admin Dashboard</h1>
+
+    <!-- Stats Cards -->
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div>
+          <div class="stat-value" id="stat-users">—</div>
+          <div class="stat-label">Total Users</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎬</div>
+        <div>
+          <div class="stat-value" id="stat-movies">—</div>
+          <div class="stat-label">Total Movies</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📺</div>
+        <div>
+          <div class="stat-value" id="stat-shows">—</div>
+          <div class="stat-label">Total TV Shows</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-target="panel-overview">📊 Overview</button>
+      <button class="admin-tab" data-target="panel-add-movie">+ Movie</button>
+      <button class="admin-tab" data-target="panel-add-show">+ TV Show</button>
+      <button class="admin-tab" data-target="panel-users">👥 Users</button>
+    </div>
+
+    <!-- ═══ PANEL: Overview ═══════════════════════════════════════ -->
+    <div class="admin-panel active" id="panel-overview">
+      <div class="data-table-wrapper">
+        <div class="data-table-header">
+          <h3>Recent Users</h3>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Role</th><th>Joined</th>
+            </tr>
+          </thead>
+          <tbody id="recent-users-body">
+            <tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-muted);">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: Add Movie ══════════════════════════════════════ -->
+    <div class="admin-panel" id="panel-add-movie">
+      <div class="profile-form">
+        <h3>🎬 Add New Movie</h3>
+        <form id="add-movie-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Title *</label>
+              <input type="text" id="m-title" class="form-input" placeholder="Movie title" required />
+            </div>
+            <div class="form-row" style="gap:12px;">
+              <div class="form-group">
+                <label class="form-label">Year *</label>
+                <input type="number" id="m-year" class="form-input" placeholder="2024" min="1900" max="2030" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rating (0–10)</label>
+                <input type="number" id="m-rating" class="form-input" placeholder="8.5" step="0.1" min="0" max="10" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description *</label>
+            <textarea id="m-description" class="form-input" rows="3" placeholder="Movie description..." style="resize:vertical;"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Genre (comma-separated) *</label>
+              <input type="text" id="m-genre" class="form-input" placeholder="Action, Thriller, Crime" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Duration</label>
+              <input type="text" id="m-duration" class="form-input" placeholder="2h 30m" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Language</label>
+              <input type="text" id="m-language" class="form-input" placeholder="English" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Thumbnail URL *</label>
+              <input type="url" id="m-thumbnail" class="form-input" placeholder="https://..." required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Backdrop Image URL</label>
+              <input type="url" id="m-backdrop" class="form-input" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Video URL</label>
+              <input type="url" id="m-videoUrl" class="form-input" placeholder="https://example.com/movie.mp4" />
+            </div>
+          </div>
+          <div style="display:flex;gap:24px;margin-bottom:16px;">
+            <div class="form-check">
+              <input type="checkbox" id="m-trending" />
+              <label for="m-trending">🔥 Trending</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="m-recommended" />
+              <label for="m-recommended">⭐ Recommended</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="add-movie-btn">Add Movie</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: Add TV Show ════════════════════════════════════ -->
+    <div class="admin-panel" id="panel-add-show">
+      <div class="profile-form">
+        <h3>📺 Add New TV Show</h3>
+        <form id="add-show-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Title *</label>
+              <input type="text" id="s-title" class="form-input" placeholder="Show title" required />
+            </div>
+            <div class="form-row" style="gap:12px;">
+              <div class="form-group">
+                <label class="form-label">Year *</label>
+                <input type="number" id="s-year" class="form-input" placeholder="2024" min="1900" max="2030" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rating</label>
+                <input type="number" id="s-rating" class="form-input" placeholder="8.0" step="0.1" min="0" max="10" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description *</label>
+            <textarea id="s-description" class="form-input" rows="3" placeholder="Show description..." style="resize:vertical;"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Genre (comma-separated) *</label>
+              <input type="text" id="s-genre" class="form-input" placeholder="Drama, Thriller" required />
+            </div>
+            <div class="form-row" style="gap:12px;">
+              <div class="form-group">
+                <label class="form-label">Seasons</label>
+                <input type="number" id="s-seasons" class="form-input" placeholder="3" min="1" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Episodes</label>
+                <input type="number" id="s-episodes" class="form-input" placeholder="30" min="1" />
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Thumbnail URL *</label>
+              <input type="url" id="s-thumbnail" class="form-input" placeholder="https://..." required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Video URL</label>
+              <input type="url" id="s-videoUrl" class="form-input" placeholder="https://example.com/show-episode.mp4" />
+            </div>
+          </div>
+          <div style="display:flex;gap:24px;margin-bottom:16px;">
+            <div class="form-check">
+              <input type="checkbox" id="s-trending" />
+              <label for="s-trending">🔥 Trending</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="s-recommended" />
+              <label for="s-recommended">⭐ Recommended</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="add-show-btn">Add TV Show</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: Users ══════════════════════════════════════════ -->
+    <div class="admin-panel" id="panel-users">
+      <div class="data-table-wrapper">
+        <div class="data-table-header">
+          <h3>All Users</h3>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-body">
+            <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-muted);">Click the Users tab to load</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <p class="footer-text">Netflix Clone © 2026 | Built by Subhankar</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
