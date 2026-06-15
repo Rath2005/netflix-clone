@@ -41,6 +41,11 @@ app.use("/api/", limiter);
 // ─── CORS Configuration ───────────────────────────────────────────────────────
 const corsOptions = {
   origin: function (origin, callback) {
+    // Allow all origins in development mode
+    if (process.env.NODE_ENV === "development") {
+      return callback(null, true);
+    }
+    
     const allowedOrigins = [
       process.env.CLIENT_URL || "http://127.0.0.1:5500",
       "http://localhost:5000",
